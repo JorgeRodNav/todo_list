@@ -1,6 +1,8 @@
 """!
 """
 from pathlib import Path
+import os
+
 
 level_dict = {
             0: "Error",
@@ -9,6 +11,8 @@ level_dict = {
         }
 
 id_dict = {}
+
+log_file_path = Path() #TODO Add path for log file
 
 class Log:
     """!
@@ -21,10 +25,12 @@ class Log:
         self.level = log_level
         self.id = log_id
         self.msg = log_msg
+        self.log_file_path = log_file_path
+        self.__record__()
 
-    def record(self, log_file_path:Path):
+    def __record__(self):
         try:
             message = f"\n{level_dict[self.level]: <{id_dict[log_id]}>{self.msg}}"
-            with open(log_file_path, 'a') as file:
+            with open(self.log_file_path, 'a') as file:
                 file.write(message)
 
